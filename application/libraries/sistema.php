@@ -1,7 +1,6 @@
 <?php if ( ! defined("BASEPATH")) exit("No direct script access allowed");
 
-class Sistema
-{
+class Sistema{
 
     //A propriedade CI recebe a isntancia do code igniter que esta sendo executada,
 

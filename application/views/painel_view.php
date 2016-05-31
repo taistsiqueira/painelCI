@@ -7,7 +7,7 @@
     <!-- Definir a largura da janela de exibição para a largura do dispositivo para celular -->
     <meta name="viewport" content="width=device-width" />
 
-    <title><?php echo $titulo; ?></title>
+    <title><?php if(isset($titulo)): ?>{titulo} | <?php endif; ?>{titulo_padrao}</title>
 
    <!-- Inclusão dos arquivos CSS (Comprimidos)-->
     <link rel="stylesheet" href="css/foundation.min.css">
@@ -19,5 +19,6 @@
 <body>
     <?php echo $conteudo; ?>
     <script src="js/foundation.min.js"></script>
+    {rodape}
 </body>
 </hmtl>
