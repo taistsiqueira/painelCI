@@ -1,9 +1,30 @@
 <?php if ( ! defined("BASEPATH")) exit("No direct script access allowed");
 switch ($tela):
     case 'login':
-        echo 'tela de login';
+        echo'<div class="row">';
+        echo '<div class="colums medium-4 medium-centered">';
+        echo form_open('usuarios/login', array('class'=>'custom loginform'));
+        echo form_fieldset('Identifique-se',array('class' => 'fieldset'));
+        erros_validacao();
+
+        echo form_label('Usuário');
+        echo form_input(array('name'=>'usuario'), set_value('usuario'), 'autofocus');
+        echo form_label('Senha');
+        echo form_password(array('name'=>'senha'),set_value('senha'));
+        echo '<div class="row">';
+        echo '<div class="columns medium-6">';
+        echo '<p>'.anchor('usuarios/nova_senha', 'Esqueci minha senha').'<p>';
+        echo '</div>';
+        echo '<div class="columns medium-6 text-right">';
+        echo form_submit(array('name'=>'logar','class'=>'button radius right'), 'Login');
+        echo '</div>';
+        echo '</div>';
+        echo form_fieldset_close();
+        echo '</div>';
+        echo '</div>';
+        break;
         break;
     default:
-        echo '<div class="alert-box alert"><p>A tela solicitada não existe</p></div>';
+        echo '<div class="Alert-box alert"><p>A tela solicitada não existe</p></div>';
         break;
 endswitch;
