@@ -1,8 +1,37 @@
 .loginform {margin-top: 130px;}
-.alert p{margin: 0 !important;} /*campo no meio dos paragrafos nas msg de alerta*/
 
+.alert p{margin: 0 !important;}
 
+input{ margin: 2px !important;}
 
+.fieldset {margin-top: 0 !important; padding: 1.5%;}
 
+.noleft{
+    padding-left: 0px;
+}
+.noright{
+    padding-right: 0px;
+}
+.no-js .top-bar {
+    display: none;
+}
 
-/*.alert{background: #333333 !important;} /*cor de fundo na caixa de msg de alerta*/
+@media screen and (min-width: 40em) {
+    .no-js .top-bar {
+        display: block;
+    }
+
+    .no-js .title-bar {
+        display: none;
+    }
+}
+
+/* tabelas */
+table.data-table{margin-bottom: -2px !important;}
+a.table-action{width: 16px; height: 16px; display: inline-block; background-position:center center; background-repeat: no-repeat; margin-right: 3px;}
+.table-edit{background: url("../images/actions-edit.png");}
+.table-pass{background: url("../images/actions-pass.png");}
+.table-delete{background: url("../images/actions-delete.png");}
+th.sorting_asc{background: url("../images/order-asc.png") right center no-repeat;}
+th.sorting_desc{background: url("../images/order-desc.png") right center no-repeat;}
+

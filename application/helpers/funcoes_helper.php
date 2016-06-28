@@ -44,7 +44,8 @@
         set_tema('template','painel_view');
 
         set_tema('headerinc', load_css(array('foundation.min','app')), FALSE);//cria uma variavel headrinc, carrega o css foundation.mim
-        set_tema('footerinc', load_js(array('foundation.min')), FALSE);
+        set_tema('footerinc', load_js(array('jquery-2.2.4','foundation.min','app')), FALSE);
+        //set_tema('footerinc', '');
     }
 
 //carrega um template passando o array $tema como parametro
@@ -101,10 +102,93 @@ function erros_validacao(){
     if (validation_errors()) echo '<div class="alert callout">'.validation_errors('<p>','</p>').'</div>';
 }
 
+//função que verifica se o usuário está logado no sistema
+//definir se vai redirecionar p outra pg ou nao
+    function esta_logado($redir=TRUE){
+        $CI =& get_instance();
+        $CI->load->library('session');
+        $user_status = $CI->session->userdata('user_logado');
+        if (!isset($user_status) | $user_status!=TRUE):
+           // $CI->session->sess_destroy();
+            if ($redir):
+                $CI->session->set_userdata(array('redir_para'=>current_url()));
+                set_msg('errologin', 'Acesso restrito, faça login antes de prosseguir', 'erro');
+                redirect('usuarios/login');
+            else:
+                return FALSE;
+            endif;
+        else:
+            return TRUE;
+        endif;
+    }
 
 
+//define uma mensagem para ser exibida na prócima tela carregada
+    function set_msg($id='msgerro', $msg=NULL, $tipo='erro')
+    {
+        $CI =& get_instance();
+        switch ($tipo):
+            case 'erro':
+                $CI->session->set_flashdata($id, '<div class="alert callout"><p>'.$msg.'</p></div>');
+                //$CI->session->set_flashdata($id, '<div class="alert-box alert"><p>'.$msg.'</p></div>');
+                break;
+            case 'success':
+                $CI->session->set_flashdata($id, '<div class="callout success"><p>'.$msg.'</p></div>');
+                //$CI->session->set_flashdata($id, '<div data-alert class="alert-box success"><p>'.$msg.'</p></div>');
+                break;
+            default:
+                $CI->session->set_flashdata($id, '<div class="callout success"><p>'.$msg.'</p></div>');
+                //$CI->session->set_flashdata($id, '<div class="alert-box"><p>'.$msg.'</p></div>');
+                break;
+        endswitch;
+    }
 
+//verifica se existe uma mensagem para ser exibida na tela atual
+    function get_msg($id, $printar=TRUE){
+        $CI =& get_instance();
+        if ($CI->session->flashdata($id)):
+            if($printar):
+                echo $CI->session->flashdata($id);
+                return TRUE;
+            else:
+                return $CI->session->flashdata($id);
+            endif;
+        endif;
+        return FALSE;
+    }
 
+//verifica se o usuário atual é adm
+    function is_admin($set_msg=FALSE){
+        $CI =& get_instance();
+        $user_admin = $CI->session->userdata('user_admin');//admin
+        if(!isset($user_admin) || !$user_admin) {
+            if ($set_msg) {
+                set_msg('msgerro', 'Seu usuário não tem permissão para executar esta operação' , 'erro');
+            }
+            return FALSE;
+        }
+            return TRUE;
+    }
+
+//gera um breadcrumb com base no controller atual
+
+    function breadcrumb(){
+        $CI =& get_instance();
+        $CI->load->helper('url');
+        $classe = ucfirst($CI->router->class);//ucfirts() :função p deixar a primeira letra da classe em maiusculo
+        if ($classe ==  'Painel'):
+            $classe = anchor($CI->router->class, 'Início');
+        else:
+            $classe = anchor($CI->router->class, $classe);
+        endif;
+        $metodo = ucwords(str_replace('_', ' ' , $CI->router->method)); //ucwords: para deixar a primeira letra de cada palavra em maisuculo
+        if ($metodo && $metodo != 'Index'):
+            $metodo = " &raquo; ".anchor($CI->router->class."/".$CI->router->method, $metodo);
+        else:
+            $metodo = '';
+        endif;
+        return '<p>Sua localização: '.anchor('painel', 'Painel').' &raquo; '.$classe.$metodo.'</p>';
+    }
 
 
 
