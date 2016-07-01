@@ -36,14 +36,21 @@
         <div class="top-bar" id="example-menu"><!-- Cria outra div-->
             <div class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu>
-                    <li><?php echo anchor('painel','Inicio');?></li> <!--Menu Inicio-->
-                    <li>
-                        <?php echo anchor('usuarios/cadastrar','Usuários');?> <!--Menu Usuários-->
+                    <li><?php echo anchor('painel','Inicio');?></li> <!-- MENU INÍCIO -->
+                    <li><?php echo anchor('usuarios/cadastrar','Usuários');?> <!--MENU USUÁRIOS-->
                         <ul class="menu vertical">
                             <li><?php echo anchor('usuarios/cadastrar','Cadastar');?></li>
                             <li><?php echo anchor('usuarios/gerenciar','Gerenciar');?></li>
                         </ul>
                     </li>
+
+                    <li>
+                        <a href="">Administração</a> <!--MENU ADMINISTRAÇÃO-->
+                            <ul class="menu vertical">
+                                <li><?php echo anchor('auditoria/gerenciar','Auditoria');?></li>
+                            </ul>
+                    </li>
+
                 </ul>
             </div>
         </div>

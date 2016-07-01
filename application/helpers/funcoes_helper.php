@@ -190,6 +190,33 @@ function erros_validacao(){
         return '<p>Sua localização: '.anchor('painel', 'Painel').' &raquo; '.$classe.$metodo.'</p>';
     }
 
+//função que seta um registro na tabela de auditoria
+
+    function auditoria($operacao, $obs='', $query=TRUE){ //QUERY=TRUE , vai epgar sempre a ultima query setada no banco
+        $CI =& get_instance();
+        $CI->load->library('session');
+        $CI->load->model('auditoria_model', 'auditoria');
+        if($query):
+            $last_query = $CI->db->last_query();
+        else:
+            $last_query = '';
+        endif;
+
+        if (esta_logado(FALSE)): //SE ESTIVER LOGADO
+            $user_id = $CI->session->userdata('user_id');
+            $user_login = $CI->usuarios->get_byid($user_id)->row()->login;
+        else:
+            $user_login = 'Desconhecido';
+        endif;
+
+        $dados = array(
+            'usuario' => $user_login,
+            'operacao' => $operacao,
+            'query' => $last_query,
+            'observacao' => $obs,
+        );
+        $CI->auditoria->do_insert($dados);
+    }
 
 
 

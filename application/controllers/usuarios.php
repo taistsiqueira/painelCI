@@ -12,7 +12,7 @@ class Usuarios extends CI_Controller
 
     public function index()
     {
-        $this->gerenciar();
+        $this->load->view('nomeview');
     }
 
     public function login()
@@ -23,7 +23,7 @@ class Usuarios extends CI_Controller
         if ($this->form_validation->run()):
             $usuario = $this->input->post('usuario', TRUE);
             $senha = md5($this->input->post('senha', TRUE));
-            $redirect = $this->input->post('redirect', TRUE);
+            $redirect = $this->input->post('redirect');
             if ($this->usuarios->do_login($usuario, $senha) == TRUE):
                 $query = $this->usuarios->get_bylogin($usuario)->row();
                 $dados = array(
@@ -33,11 +33,8 @@ class Usuarios extends CI_Controller
                     'user_logado' => TRUE,
                 );
                 $this->session->set_userdata($dados);
-                if ($redirect != ''):
-                    redirect($redirect);
-                else:
-                    redirect('painel');
-                endif;
+                auditoria('Login no sistema', 'Login efetuado com sucesso');
+                redirect('painel');
             else:
                 $query = $this->usuarios->get_bylogin($usuario)->row();
                 if (empty($query)):
@@ -61,6 +58,7 @@ class Usuarios extends CI_Controller
 
     public function logoff()
     {
+        auditoria('Logoff no sistema', 'Logoff efetuado com sucesso');
         $this->session->set_userdata(array(
             'user_id' => '',
             'user_nome' => '',
@@ -69,6 +67,7 @@ class Usuarios extends CI_Controller
         ));//seta toda a minha sessão com valores vazios
         //$this->session->sess_destroy();//destrói a sessão. //nao utilizado devido modificações de versão
         set_msg('logoffok', 'Logoff efetuado com sucesso!', 'success'); //VERIFICAR, NÃO ESTA VERDE
+
         redirect('usuarios/login');//retorna para a tela usuarios
     }
 
@@ -86,6 +85,7 @@ class Usuarios extends CI_Controller
                 if ($this->sistema->enviar_email($email, 'Nova senha de acesso', $mensagem)):
                     $dados['senha'] = md5($novasenha);
                     $this->usuarios->do_update($dados, array('email' => $email), FALSE);
+                    auditoria('Redifinição de senha', 'O usuário solicitou uma nova senha por email');
                     set_msg('msgok', 'Uma nova senha foi enviada para seu email', 'sucesso');
                     redirect('usuarios/nova_senha');
                 else:
