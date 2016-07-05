@@ -36,6 +36,13 @@ class Midia extends CI_Controller
         set_tema('conteudo', load_modulo('midia','cadastrar'));
         load_template();
     }
+
+    public function gerenciar(){
+        set_tema('footerinc', load_js('data-table','table'), FALSE);
+        set_tema('titulo', 'Listagem de mídias' );
+        set_tema('conteudo', load_modulo('midia', 'gerenciar'));
+        load_template();
+    }
   }
 
 

@@ -32,6 +32,9 @@ switch ($tela):
                $('.deletareg').click(function() {
                    if (confirm("Deseja realmente excluir este registro?\nEsta operação não poderá ser desfeita!"))return true; else return false;
                });
+                $('input').click(function(){
+                    (this).select();
+                });
             });
         </script>
         <div class="column row">
@@ -39,34 +42,29 @@ switch ($tela):
             echo breadcrumb();
             get_msg('msgok');
             get_msg('msgerro');
-
-            $modo = $this->uri->segment(3);
-            if ($modo=='all'):
-                $limite = 0;
-            else:
-                $limite = 50;
-                echo '<p>Mostrando os últimos 50 registros, para ver todo o histórico '.anchor('auditoria/gerenciar/all', 'clique aqui').'</p>';
-            endif;
-
             ?>
 
         <table class="data-table">
             <thead>
             <tr>
-                <th>Usuário</th>
-                <th>Data/Hora</th>
-                <th>Operação</th>
-                <th>Observação</th>
+                <th>Nome</th>
+                <th>Link</th>
+                <th>Miniatura</th>
+                <th class="text-center">Ações</th>
             </tr>
             <tbody>
             <?php
-            $query= $this->auditoria->get_all($limite)->result();//limite de 50 registros
+            $query = $this->midia->get_all()->result();//limite de 50 registros
             foreach ($query as $linha){
                 echo '<tr>';
-                printf('<td>%s</td>',$linha->usuario);
-                printf('<td>%s</td>',date('d/m/Y H:i:s', strtotime($linha->data_hora)));
-                printf('<td>%s</td>','<span class="has-tip tip-top" title="'.$linha->query.'">'.$linha->operacao.'</span>'); //configurado span para visualziar o SQL executado
-                printf('<td>%s</td>',$linha->observacao);
+                printf('<td>%s</td>',$linha->nome);
+                printf('<td><input type="text" value="%s" /></td>', base_url("uploads/$linha->arquivo"));
+                printf('<td>%s</td>',thumb($linha->arquivo)); //configurado span para visualziar o SQL executado
+                printf('<td class="text-center">%s%s%s</td>',
+                    anchor("uploads/$linha->arquivo",' ',array('class'=>'table-action table-view','title'=>'Visualizar', 'target'=>'_blank')), //blank abre uma guia nova qdo visualziar
+                    anchor("midia/editar/$linha->id",' ',array('class'=>'table-action table-edit','title'=>'Editar')),
+                    anchor("midia/excluir/$linha->id",' ',array('class'=>'table-action table-delete deletareg','title'=>'Excluir'))
+                );
                 echo '</tr>';
             }
             ?>

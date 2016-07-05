@@ -25,6 +25,10 @@ class Midia_model extends CI_Model{
             return $this->upload->display_errors();
         endif;
     }
+
+    public function get_all(){ //pegar todos os registros do BD
+        return $this->db->get('midia'); //retorna todos os registros da tabela usuarios
+    }
 }
 
 /*End of file midia_model.php */

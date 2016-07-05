@@ -26,6 +26,7 @@ a.table-action{width: 16px; height: 16px; display: inline-block; background-posi
 .table-edit{background: url("../images/actions-edit.png");}
 .table-pass{background: url("../images/actions-pass.png");}
 .table-delete{background: url("../images/actions-delete.png");}
+.table-view{background:url("../images/actions-view.png")};
 th.sorting_asc{background: url("../images/order-asc.png") right center no-repeat;}
 th.sorting_desc{background: url("../images/order-desc.png") right center no-repeat;}
 
