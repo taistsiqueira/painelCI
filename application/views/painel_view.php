@@ -37,10 +37,18 @@
             <div class="top-bar-left">
                 <ul class="dropdown menu" data-dropdown-menu>
                     <li><?php echo anchor('painel','Inicio');?></li> <!-- MENU INÍCIO -->
+
                     <li><?php echo anchor('usuarios/cadastrar','Usuários');?> <!--MENU USUÁRIOS-->
                         <ul class="menu vertical">
                             <li><?php echo anchor('usuarios/cadastrar','Cadastar');?></li>
                             <li><?php echo anchor('usuarios/gerenciar','Gerenciar');?></li>
+                        </ul>
+                    </li>
+
+                    <li><?php echo anchor('midia/gerenciar','Midia');?> <!--MENU MÍDIA-->
+                        <ul class="menu vertical">
+                            <li><?php echo anchor('midia/cadastrar','Cadastrar');?></li>
+                            <li><?php echo anchor('midia/gerenciar','Gerenciar');?></li>
                         </ul>
                     </li>
 
@@ -50,7 +58,6 @@
                                 <li><?php echo anchor('auditoria/gerenciar','Auditoria');?></li>
                             </ul>
                     </li>
-
                 </ul>
             </div>
         </div>

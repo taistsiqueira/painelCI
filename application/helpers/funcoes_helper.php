@@ -38,6 +38,7 @@
         $CI->load->helper(array('form','url','array','text'));
         //carregamento dos models do painel adm
         $CI->load->model('usuarios_model', 'usuarios');//nme e apelido
+        $CI->load->model('midia_model', 'midia');//nme e apelido
 
         set_tema('titulo_padrao','Gerenciamento de Conteúdo');
         set_tema('rodape', '<p>&copy; 2016 | Todos os direitos reservados para Taís T. Siqueira');
