@@ -74,6 +74,42 @@ switch ($tela):
         </div>
         <?php
         break;
+
+    case 'editar':
+        $idmidia = $this->uri->segment(3);
+        if($idmidia == NULL)
+            //set_msg('msgerro','Escolha uma mídia para alterar', 'erro');
+            //redirect('midia/gerenciar');
+            return;
+        echo '<div class="row">';//cria uma linha
+        echo '<div class="colums medium-6 medium-centered">';
+        echo breadcrumb();
+            $query = $this->midia->get_byid($idmidia)->row();
+            erros_validacao();
+            get_msg('msgok');
+            echo form_open(current_url(), array('class'=>'custom')); //multipart devido as midias
+            echo form_fieldset('Alteração de Mídia',array('class' => 'fieldset'));
+
+            echo form_label('Nome para exibição');
+            echo form_input(array('name'=>'nome', 'class'=>'medium-12'), set_value('nome', $query->nome), 'autofocus');
+            echo form_label('Descrição');
+            echo form_input(array('name'=>'descricao', 'class'=>'medium-12'), set_value('descricao', $query->descricao));
+
+            echo '<div class="colums medium-6">';
+            echo form_submit(array('name'=>'editar', 'class'=>'button radius'), 'Salvar Dados');
+            echo anchor('midia/gerenciar', 'Cancelar', array('class'=>'button radius right alert espaco'));
+            echo form_hidden('idmidia', $query->id);
+            echo '</div>';
+
+            echo '<br>';
+            echo '<div class="columns medium-6 medium-centered">';
+            echo thumb($query->arquivo, 300, 180);
+            echo '</div>';
+
+            echo form_fieldset_close();
+            echo form_close();
+         break;
+
     default:
         echo '<div class="Alert-box alert"><p>A tela solicitada não existe</p></div>';
         break;

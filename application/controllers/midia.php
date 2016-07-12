@@ -43,6 +43,41 @@ class Midia extends CI_Controller
         set_tema('conteudo', load_modulo('midia', 'gerenciar'));
         load_template();
     }
+
+    public function editar()
+    {
+        $this->form_validation->set_rules('nome', 'NOME', 'trim|required|ucfirst');
+        $this->form_validation->set_rules('descricao', 'DESCRICAO', 'trim');
+        if ($this->form_validation->run()):
+            $dados = elements(array('nome', 'descricao'), $this->input->post());
+            $this->midia->do_update($dados, array('id' =>$this->input->post('idmidia')));
+        endif;
+        set_tema('titulo', 'Alteração de mídia');
+        set_tema('conteudo', load_modulo('midia', 'editar'));//alterar do adm
+        load_template();
+    }
+
+    public function excluir(){
+           if(is_admin(TRUE)):
+                $idmidia = $this->uri->segment(3);
+                if ($idmidia != NULL):
+                    $query = $this->midia->get_byid($idmidia);
+                    if ($query->num_rows()==1): //se o numero de linha for igual a 1 então:
+                        $query = $query->row();//para retornar o registro queveio do BD
+                        unlink('./uploads/'.$query->arquivo); //unlink: função do php responsavel por deletar arquivos // exclui o arquivo da pasta UPLOADS em c:\xampp\htdocs\painelci\uploads
+                        $thumbs = glob('./uploads/thumbs/*_'.$query->arquivo);//excluir todas as miniaturas desta imagem
+                        foreach ($thumbs as $arquivo):
+                            unlink($arquivo);
+                        endforeach;
+                        $this->midia->do_delete(array('id'=>$query->id), FALSE); //deleta as imgs do banco de dados
+                    endif;
+                else:
+                    set_msg('msgerro', 'Escolha uma mídia para excluir', 'erro');
+                endif;
+            endif;
+            redirect('midia/gerenciar');
+    }
+    
   }
 
 

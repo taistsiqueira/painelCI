@@ -28,14 +28,14 @@
         </div>
 
 
-        <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium"><!--insere a linha preta menu-->
+        <div class="title-bar" data-responsive-toggle="example-menu" data-hide-for="medium">
             <button class="menu-icon" type="button" data-toggle></button> <!--1. insere o botão menu;-->
             <div class="title-bar-title">Menu</div>
         </div>
 
-        <div class="top-bar" id="example-menu"><!-- Cria outra div-->
-            <div class="top-bar-left">
-                <ul class="dropdown menu" data-dropdown-menu>
+        <div class="top-bar" id="example-menu"><!-- Cria outra div--><!--insere a linha preta menu-->
+            <div class="top-bar-left"><!-- Cria outra div--><!--insere a div com os menus-->
+                <ul class="dropdown menu" data-dropdown-menu> <!--CONFIGURADA COR PRETA NO CSS:  .dropdown{background-color: black !important;}-->
                     <li><?php echo anchor('painel','Inicio');?></li> <!-- MENU INÍCIO -->
 
                     <li><?php echo anchor('usuarios/cadastrar','Usuários');?> <!--MENU USUÁRIOS-->

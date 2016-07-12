@@ -6,6 +6,23 @@ input{ margin: 2px !important;}
 .fieldset {margin-top: 0 !important; padding: 1.5%;}
 /*input[type="file"]{display: block; font-size: 14px; margin: 0 0 12px; padding: 6px;}*/
 
+.top-bar{background-color: black;} /*menu grande, linha inteira*/
+
+.dropdown{background-color: black !important; } /*menus*/
+
+.is-submenu-item{background-color: black !important;} /*submenus*/
+
+.menu a{color: yellow !important;} /*cores dos textos dos menus*/
+
+.dropdown.menu>li.is-dropdown-submenu-parent>a:after{
+    border-color: yellow transparent transparent !important; border-top-color: yellow !important; /* define a cor das setas nos menus*/
+}
+
+.columns a h1{color: black !important;}
+
+.twelve p a{color: #bababa !important;} /*altera a cor dos links da localização*/
+
+
 .noleft{padding-left: 0px;}
 .noright{padding-right: 0px;}
 .no-js .top-bar {display: none;}
@@ -26,7 +43,7 @@ a.table-action{width: 16px; height: 16px; display: inline-block; background-posi
 .table-edit{background: url("../images/actions-edit.png");}
 .table-pass{background: url("../images/actions-pass.png");}
 .table-delete{background: url("../images/actions-delete.png");}
-.table-view{background:url("../images/actions-view.png")};
+.table-view{background:url("../images/actions-view.png");}
 th.sorting_asc{background: url("../images/order-asc.png") right center no-repeat;}
 th.sorting_desc{background: url("../images/order-desc.png") right center no-repeat;}
 
