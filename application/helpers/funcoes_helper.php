@@ -49,6 +49,25 @@
         //set_tema('footerinc', '');
     }
 
+//função que inicialzia o TINYMCE para a criação de textarea com editor html
+    function init_htmleditor(){
+        set_tema('footerinc', load_js(base_url('htmleditor/tiny_mce.js'), null, true), false );
+        set_tema('footerinc', load_js(base_url('htmleditor/init_tiny_mce.js'), null, true), false );
+
+    }
+
+//retorna ou printa o conteudo de uma view
+//function incluir_arquivo($view, $pasta='includes', $echo=TRUE){
+//    $CI =& get_instance();
+//    if ($echo == TRUE):
+//        echo $CI->load->view("$pasta/$view",'',TRUE);
+//        return TRUE;
+//    endif;
+//    return $CI->load->view("$pasta/$view",'',TRUE);
+//}
+
+
+
 //carrega um template passando o array $tema como parametro
     function load_template(){
         $CI =& get_instance();

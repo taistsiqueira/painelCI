@@ -52,6 +52,14 @@
                         </ul>
                     </li>
 
+                    <li><?php echo anchor('paginas/gerenciar','Páginas');?> <!--MENU MÍDIA-->
+                        <ul class="menu vertical">
+                            <li><?php echo anchor('paginas/cadastrar','Cadastrar');?></li>
+                            <li><?php echo anchor('paginas/gerenciar','Gerenciar');?></li>
+                        </ul>
+                    </li>
+
+
                     <li>
                         <a href="">Administração</a> <!--MENU ADMINISTRAÇÃO-->
                             <ul class="menu vertical">
