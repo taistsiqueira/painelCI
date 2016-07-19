@@ -17,19 +17,13 @@ class Paginas extends CI_Controller
 
     public function cadastrar()
     {
-        $this->form_validation->set_rules('nome', 'NOME', 'trim|required|ucfirst');
-        $this->form_validation->set_rules('descricao', 'DESCRICAO', 'trim');
+        $this->form_validation->set_rules('titulo','TITULO', 'trim|required|ucfirst');
+        $this->form_validation->set_rules('slug','SLUG','trim');
+        $this->form_validation->set_rules('conteudo','CONTEUDO','trim|required|htmlentities');
         if ($this->form_validation->run()==TRUE):
-            $upload = $this->midia->do_upload('arquivo');
-            if (is_array($upload) && $upload['file_name']!= ''):
-                $dados = elements(array('nome', 'descricao'), $this->input->post());
-                $dados['arquivo'] = $upload['file_name'];
-                $this->midia->do_insert($dados);
-            else:
-                set_msg('msgerro', $upload, 'erro');
-                redirect(current_url());
-            endif;
-
+            $dados = elements(array('titulo', 'slug','conteudo'), $this->input->post());
+                ($dados['slug'] != '') ? $dados['slug']=slug($dados['slug']) : $dados['slug']=slug($dados['titulo']);
+                $this->paginas->do_insert($dados);
         endif;
         init_htmleditor();
         set_tema('titulo', 'Cadastrar nova página');
@@ -37,10 +31,10 @@ class Paginas extends CI_Controller
         load_template();
     }
 
-    public function gerenciar(){
+   public function gerenciar(){
         set_tema('footerinc', load_js('data-table','table'), FALSE);
-        set_tema('titulo', 'Listagem de mídias' );
-        set_tema('conteudo', load_modulo('midia', 'gerenciar'));
+        set_tema('titulo', 'Páginas' );
+        set_tema('conteudo', load_modulo('paginas', 'gerenciar'));
         load_template();
     }
 }

@@ -4,7 +4,7 @@ class Paginas_model extends CI_Model{
 
     public function do_insert($dados=NULL, $redir=TRUE){
         if($dados != NULL):
-            $this->db->insert('midia', $dados);
+            $this->db->insert('paginas', $dados);
             if ($this->db->affected_rows()>0):
                 auditoria('Inclusão de página','Nova página cadastrada no sistema');
                 set_msg('msgok', 'Cadastro efetuado com sucesso', 'sucesso');

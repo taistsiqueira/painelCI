@@ -31,9 +31,7 @@ switch ($tela):
                $('.deletareg').click(function() {
                    if (confirm("Deseja realmente excluir este registro?\nEsta operação não poderá ser desfeita!"))return true; else return false;
                });
-                $('input').click(function(){
-                    (this).select();
-                });
+
             });
         </script>
         <div class="column row">
@@ -46,23 +44,22 @@ switch ($tela):
         <table class="data-table">
             <thead>
             <tr>
-                <th>Nome</th>
-                <th>Link</th>
-                <th>Miniatura</th>
+                <th>Título</th>
+                <th>Slug</th>
+                <th>Resumo</th>
                 <th class="text-center">Ações</th>
             </tr>
             <tbody>
             <?php
-            $query = $this->midia->get_all()->result();//limite de 50 registros
+            $query = $this->paginas->get_all()->result();//limite de 50 registros
             foreach ($query as $linha){
                 echo '<tr>';
-                printf('<td>%s</td>',$linha->nome);
-                printf('<td><input type="text" value="%s" /></td>', base_url("uploads/$linha->arquivo"));
-                printf('<td>%s</td>',thumb($linha->arquivo)); //configurado span para visualziar o SQL executado
-                printf('<td class="text-center">%s%s%s</td>',
-                    anchor("uploads/$linha->arquivo",' ',array('class'=>'table-action table-view','title'=>'Visualizar', 'target'=>'_blank')), //blank abre uma guia nova qdo visualziar
-                    anchor("midia/editar/$linha->id",' ',array('class'=>'table-action table-edit','title'=>'Editar')),
-                    anchor("midia/excluir/$linha->id",' ',array('class'=>'table-action table-delete deletareg','title'=>'Excluir'))
+                printf('<td>%s</td>',$linha->titulo);
+                printf('<td>%s</td>',$linha->slug);
+                printf('<td>%s</td>',resumo_post($linha->conteudo, 8)); //mostra 10 palavras
+                printf('<td class="text-center">%s%s</td>',
+                    anchor("paginas/editar/$linha->id",' ',array('class'=>'table-action table-edit','title'=>'Editar')),
+                    anchor("pagians/excluir/$linha->id",' ',array('class'=>'table-action table-delete deletareg','title'=>'Excluir'))
                 );
                 echo '</tr>';
             }

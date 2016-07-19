@@ -143,7 +143,7 @@ function erros_validacao(){
     }
 
 
-//define uma mensagem para ser exibida na prócima tela carregada
+//define uma mensagem para ser exibida na próxima tela carregada
     function set_msg($id='msgerro', $msg=NULL, $tipo='erro')
     {
         $CI =& get_instance();
@@ -267,8 +267,31 @@ function erros_validacao(){
         return $retorno;
     }
 
+//gera um slug baseado no título
+    function slug($string=NULL){
+        $string = remove_acentos($string); //remover os acentos
+        return url_title($string, '-', TRUE); //faz ficar tudo em letra minuscula
+    }
 
+//função que remove acentos e caracteres especiais de uma string
+    function remove_acentos($string=NULL){
+        $procurar = array('À','Á','Ã','Â','É','Ê','Í','Ó','Õ','Ô','Ú','Ü','Ç','à','á','ã','â','é','ê','í','ó','õ','ô','ú','ü','ç');
+        $substituir = array('A','A','A','A','E','E','I','O','O','O','U','U','C','a','a','a','a','e','e','i','o','o','o','o','u','u','c');
+        return str_replace($procurar,$substituir ,$string );
+    }
 
+// função que gera o resumo de uma string
+    function resumo_post($string=NULL, $palavras=50, $decodifica_html=TRUE, $remove_tags=TRUE){
+        if ($string!=NULL):
+            if ($decodifica_html) $string = html_entity_decode($string);
+            if ($remove_tags) $string = strip_tags($string);
+            $retorno = word_limiter($string, $palavras);
+        else:
+            $retorno = FALSE;
+        endif;
+        return $retorno;
+
+    }
 
 
 
