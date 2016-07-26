@@ -297,7 +297,43 @@ function erros_validacao(){
         return html_entity_decode($string);
     }
 
+//função que salva ou atualzia uma config no BD
+    function set_settings($nome, $valor=''){
+        $CI =& get_instance();
+        $CI->load->model('settings_model','settings');
+        if ($CI->settings->get_bynome($nome)->num_rows()==1): //ou seja, se existe essa configuração la no BD
+            if (trim($valor) == ''):
+                $CI->settings->do_delete(array('nome_config'=>$nome), FALSE); //se o valor for vazio, exclui do BD
+            else:
+                //SE NÃO atualiza no bd
+                $dados = array(
+                    'nome_config' => $nome,
+                    'valor_config' => $valor
+                );
+                $CI->settings->do_update($dados, array('nome_config'=>$nome), FALSE);
+            endif;
 
+        else:
+            //insere no bd
+            $dados = array(
+                'nome_config' => $nome,
+                'valor_config' => $valor
+            );
+            $CI->settings->do_insert($dados, FALSE);
+        endif;
+    }
 
+//retorna uma config do BD
+    function get_setting($nome){
+        $CI =& get_instance();
+        $CI->load->model('settings_model', 'settings');
+        $setting = $CI->settings->get_bynome($nome);
+        if ($setting->num_rows()==1):
+            $setting = $setting->row();
+            return $setting->valor_config;
+        else:
+            return NULL;
+        endif;
+    }
 
 

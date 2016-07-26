@@ -64,6 +64,7 @@
                         <a href="">Administração</a> <!--MENU ADMINISTRAÇÃO-->
                             <ul class="menu vertical">
                                 <li><?php echo anchor('auditoria/gerenciar','Auditoria');?></li>
+                                <li><?php echo anchor('settings/gerenciar','Configurações');?></li>
                             </ul>
                     </li>
                 </ul>
