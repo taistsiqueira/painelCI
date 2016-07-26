@@ -30,7 +30,7 @@ class Paginas_model extends CI_Model{
 
     public function do_delete($condicao=NULL, $redir=TRUE){
         if ($condicao !=NULL && is_array($condicao)):
-            $this->db->delete('páginas', $condicao);
+            $this->db->delete('paginas', $condicao);
             if ($this->db->affected_rows()>0):
                 set_msg('msgok', 'Registro excluído com sucesso', 'sucesso');
                 auditoria('Exclusão de página','A página com o id "'.$condicao['id'].'" foi excluída');

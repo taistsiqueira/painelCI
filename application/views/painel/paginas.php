@@ -59,7 +59,7 @@ switch ($tela):
                 printf('<td>%s</td>',resumo_post($linha->conteudo, 8)); //mostra 10 palavras
                 printf('<td class="text-center">%s%s</td>',
                     anchor("paginas/editar/$linha->id",' ',array('class'=>'table-action table-edit','title'=>'Editar')),
-                    anchor("pagians/excluir/$linha->id",' ',array('class'=>'table-action table-delete deletareg','title'=>'Excluir'))
+                    anchor("paginas/excluir/$linha->id",' ',array('class'=>'table-action table-delete deletareg','title'=>'Excluir'))
                 );
                 echo '</tr>';
             }
@@ -72,39 +72,42 @@ switch ($tela):
         break;
 
     case 'editar':
-        $idmidia = $this->uri->segment(3);
-        if($idmidia == NULL)
-            //set_msg('msgerro','Escolha uma mídia para alterar', 'erro');
-            //redirect('midia/gerenciar');
+        $idpagina = $this->uri->segment(3);
+        if($idpagina == NULL)
+            //set_msg('msgerro','Escolha uma página para alterar', 'erro');
+            //redirect('paginas/gerenciar');
             return;
         echo '<div class="row">';//cria uma linha
         echo '<div class="colums medium-6 medium-centered">';
-        echo breadcrumb();
-            $query = $this->midia->get_byid($idmidia)->row();
+            $query = $this->paginas->get_byid($idpagina)->row();
+            echo breadcrumb();
             erros_validacao();
             get_msg('msgok');
+            get_msg('msgerro');
             echo form_open(current_url(), array('class'=>'custom')); //multipart devido as midias
-            echo form_fieldset('Alteração de Mídia',array('class' => 'fieldset'));
+            echo form_fieldset('Alterar página',array('class' => 'fieldset'));
+            echo form_label('Título');
+            echo form_input(array('name'=>'titulo', 'class'=>'medium-12'), set_value('titulo', $query->titulo), 'autofocus');
+            echo form_label('Slug (deixe em branco se não souber do que se trata)');
+            echo form_input(array('name'=>'slug', 'class'=>'medium-12'), set_value('slug', $query->slug));
 
-            echo form_label('Nome para exibição');
-            echo form_input(array('name'=>'nome', 'class'=>'medium-12'), set_value('nome', $query->nome), 'autofocus');
-            echo form_label('Descrição');
-            echo form_input(array('name'=>'descricao', 'class'=>'medium-12'), set_value('descricao', $query->descricao));
+            echo '<p>'.anchor('#', 'Inserir imagens', 'class="addimg button tiny radius"');
+            echo anchor('midia/cadastrar', 'Upload de imagens', 'target="_blank" class="button tiny secondary radius"').'</p>';
+
+            echo form_label('Conteúdo');
+            echo form_textarea(array('name'=>'conteudo', 'class'=>'medium-12 htmleditor', 'rows'=>20), set_value('conteudo', to_html($query->conteudo)));
 
             echo '<div class="colums medium-6">';
-            echo form_submit(array('name'=>'editar', 'class'=>'button radius'), 'Salvar Dados');
-            echo anchor('midia/gerenciar', 'Cancelar', array('class'=>'button radius right alert espaco'));
-            echo form_hidden('idmidia', $query->id);
+            echo form_submit(array('name'=>'editar', 'class'=>'button radius'), 'Salvar dados');
+            echo anchor('paginas/gerenciar', 'Cancelar', array('class'=>'button radius right alert espaco'));
+            echo form_hidden('idpagina', $query->id);
             echo '</div>';
-
-            echo '<br>';
-            echo '<div class="columns medium-6 medium-centered">';
-            echo thumb($query->arquivo, 300, 180);
             echo '</div>';
-
             echo form_fieldset_close();
             echo form_close();
-         break;
+
+            incluir_arquivo('insertimg'/*, 'includes', TRUE*/);
+        break;
 
     default:
         echo '<div class="Alert-box alert"><p>A tela solicitada não existe</p></div>';

@@ -57,14 +57,14 @@
     }
 
 //retorna ou printa o conteudo de uma view
-//function incluir_arquivo($view, $pasta='includes', $echo=TRUE){
-//    $CI =& get_instance();
-//    if ($echo == TRUE):
-//        echo $CI->load->view("$pasta/$view",'',TRUE);
-//        return TRUE;
-//    endif;
-//    return $CI->load->view("$pasta/$view",'',TRUE);
-//}
+function incluir_arquivo($view, $pasta='includes', $echo=TRUE){
+    $CI =& get_instance();
+    if ($echo == TRUE):
+        echo $CI->load->view("$pasta/$view",'',TRUE);
+        return TRUE;
+    endif;
+    return $CI->load->view("$pasta/$view",'',TRUE);
+}
 
 
 
@@ -283,14 +283,18 @@ function erros_validacao(){
 // função que gera o resumo de uma string
     function resumo_post($string=NULL, $palavras=50, $decodifica_html=TRUE, $remove_tags=TRUE){
         if ($string!=NULL):
-            if ($decodifica_html) $string = html_entity_decode($string);
+            if ($decodifica_html) $string = to_html($string);
             if ($remove_tags) $string = strip_tags($string);
             $retorno = word_limiter($string, $palavras);
         else:
             $retorno = FALSE;
         endif;
         return $retorno;
+    }
 
+//converter dados do BD para html válido
+    function to_html($string){
+        return html_entity_decode($string);
     }
 
 
